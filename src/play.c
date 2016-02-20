@@ -90,6 +90,21 @@ int 	reachable(t_map *map, int x, int y)
 		return (0);
 }
 
+t_path 		*path_copy(t_path path)
+{
+	t_path *newpath;
+	int i;
+
+	newpath = malloc(sizeof(t_path));
+	newpath->dist = path.dist;
+	newpath->len = path.len;
+
+	newpath->tab = malloc(path.len * sizeof(t_vect));
+	for (i = 0; i <  path.len; i++)
+		newpath->tab[i] = path.tab[i];
+	return (newpath);
+}
+
 t_map 		*copy_map(t_map *map)
 {
 	t_map 	*newmap;
@@ -137,7 +152,6 @@ void		sort_solutions(t_da *solutions)
 
 	for (i = 0; i < solutions->length - 1; i++)
 	{
-
 		min = i;
 		min_dist = ((t_path*)da_at(solutions, min))->dist;
 		for (k = i + 1; k <  solutions->length; k++)
@@ -170,12 +184,14 @@ void		get_solutions(t_map *map, t_da *solutions, t_path *path)
 	int 	newpv;
 	t_vect 	pos;
 	t_map 	*map_tmp;
+	t_path  *path_tmp;
 
+	print_path(path);
 	if (map->init.pv >= dist_exit(map, map->start))
 	{
 		my_putstr("case 1\n");
         path_push(path, map->finish);
-		da_push(solutions, path);
+		da_push(solutions, path_copy(*path));
 		my_putstr("solutions atm --------- \n");
 		print_solutions(solutions);
 		my_putstr("------------\n");
@@ -195,12 +211,15 @@ void		get_solutions(t_map *map, t_da *solutions, t_path *path)
 				if (newpv != 0)
 				{
 					map_tmp = copy_map(map);
+					path_tmp = path_copy(*path);
+
 					pos = map_tmp->start = map->resrc.tab[i].coord;
 					map_tmp->init.pv = newpv;
 					map_tmp->resrc.tab[i].visited = 1;
-					path->dist += vect_dist(map->resrc.tab[i].coord, map->start);
-					path_push(path, pos);
-					get_solutions(map_tmp, solutions, path);
+
+					path_tmp->dist += vect_dist(map->resrc.tab[i].coord, map->start);
+					path_push(path_tmp, pos);
+					get_solutions(map_tmp, solutions, path_tmp);
 				}
 			}
 		}

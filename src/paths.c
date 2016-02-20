@@ -7,7 +7,7 @@ t_vect path_pop(t_path *p)
 
     if (p->len <= 0) {
         my_putstr("ERROR: path_pop: empty path (len <= 0)\n");
-        return (v);    
+        return (v);
     }
 
     v = p->tab[p->len - 1];

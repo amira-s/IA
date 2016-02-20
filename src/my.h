@@ -35,7 +35,8 @@ int      	dist_exit(t_map *map, t_vect v);
 void 		fill_resrc(t_map *);
 int 		reachable(t_map *map, int x, int y);
 void		path_new(t_path *path, t_map *map);
-void print_resrc_tab(t_map *map);
+void 		print_resrc_tab(t_map *map);
+t_path 		*path_copy(t_path path);
 
 /*getmap.c*/
 void    	freetab(t_map *);

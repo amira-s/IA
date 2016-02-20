@@ -11,6 +11,9 @@
 #include "my.h"
 #include <stdio.h>
 
+void my_memcpy(void *dest, void *src, int size);
+t_path 		*path_copy(t_path path);
+
 int 	game(t_map *map)
 {
 	t_da	*solutions;
