@@ -21,6 +21,8 @@ char		*my_strdup(char *);
 void        my_swap(void* a, void* b, int size);
 void        *noop(void*);
 void        *trace(void*, char* msg);
+void 		my_memcpy(void *dest, void *src, int size);
+int my_isint(char *str);
 
 t_map 		*copy_map(t_map *map);
 t_vect      path_pop(t_path *p);
@@ -37,7 +39,7 @@ void 		fill_resrc(t_map *);
 int 		reachable(t_map *map, int x, int y);
 void		path_new(t_path *path, t_map *map);
 void 		print_resrc_tab(t_map *map);
-t_path 		*path_copy(t_path path);
+t_path 		*path_copy(t_path *path);
 
 /*getmap.c*/
 void    	freetab(t_map *);

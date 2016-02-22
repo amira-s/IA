@@ -12,7 +12,6 @@
 #include <stdio.h>
 
 void my_memcpy(void *dest, void *src, int size);
-t_path 		*path_copy(t_path path);
 
 int 	game(t_map *map)
 {
@@ -43,16 +42,12 @@ void	*verif(char *argv[])
     t_map *map;
 
     map = malloc(sizeof(t_map));
-	if ((argv[1][0] >= '0') && (argv[1][0] <= '9') && (my_strlen(argv[1]) == 1))
+	if (my_isint(argv[1]) && my_isint(argv[2]))
 	{
-		if ((argv[2][0] >= '0') && (argv[2][0] <= '9') && (my_strlen(argv[2]) == 1))
-		{
-			map = get_map(argv[3]);
-			return (map);
-		}
-		else
-			return (0);
+		map = get_map(argv[3]);
+		return (map);
 	}
+	my_putstr("Arg1 and Arg2 have to be integers\n");
 	return (0);
 }
 
@@ -60,7 +55,6 @@ int		main(int argc, char *argv[])
 {
     t_map *map;
 
-    map = malloc(sizeof(t_map));
 	if (argc == 4)
 	{
 		map = verif(argv);

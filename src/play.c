@@ -3,6 +3,16 @@
 
 #define DEFAULT_RESRC_BUFFER_COUNT 50
 
+
+void print_finish(t_map *map)
+{
+	my_putstr("finish (");
+	my_put_nbr(map->finish.x);
+	my_putstr(" ,");
+	my_put_nbr(map->finish.y);
+	my_putstr(")\n");
+}
+
 void 	init_pos(t_map *map)
 {
 	int i;
@@ -32,8 +42,7 @@ void 	fill_resrc(t_map *map)
 	int j;
 	int k;
 
-	if ((map->resrc.tab = malloc(
-                    sizeof(t_vect) * DEFAULT_RESRC_BUFFER_COUNT)) == NULL)
+	if ((map->resrc.tab = malloc(sizeof(*(map->resrc.tab)) * DEFAULT_RESRC_BUFFER_COUNT)) == NULL)
 		return ;
 	for (i = 0, k = 0; i < map->h; i++)
 	    for (j = 0; j < map->w; j++)
@@ -90,19 +99,26 @@ int 	reachable(t_map *map, int x, int y)
 		return (0);
 }
 
-t_path 		*path_copy(t_path path)
+t_path 		*path_copy(t_path *path)
 {
 	t_path *newpath;
+	int tab_size;
 	int i;
 
 	newpath = malloc(sizeof(t_path));
-	newpath->dist = path.dist;
-	newpath->len = path.len;
+	newpath->dist = path->dist;
+	newpath->len = path->len;
+	tab_size = (path->len + 100) * sizeof(t_vect);
 
-	if ((newpath->tab = malloc(path.len * sizeof(t_vect))) == NULL)
+	printf("path->len (path_copy) : %d, tab_size: %d\n", path->len, tab_size);
+
+	if ((newpath->tab = malloc(tab_size)) == NULL)
         return (trace(NULL, "path_copy: malloc failed"));
-	for (i = 0; i <  path.len; i++)
-		newpath->tab[i] = path.tab[i];
+
+
+
+	for (i = 0; i <  path->len; i++)
+		newpath->tab[i] = path->tab[i]; 
 	return (newpath);
 }
 
@@ -114,18 +130,31 @@ t_map 		*copy_map(t_map *map)
 	char tmp;
 	t_vect vect_tmp;
 
-	if ((newmap = malloc(sizeof(map))) == NULL)
-        return (trace(NULL, "copy_map: malloc failed"));
+	if ((newmap = malloc(sizeof(*map))) == NULL)
+        return (trace(NULL, "copy_map: malloc failed1"));
 
-	newmap->init.r = map->init.r;
-	newmap->init.pv = map->init.pv;
-
+	newmap->init = map->init;
 	newmap->start = map->start;
 	newmap->finish = map->finish;
 
-	newmap->resrc = map->resrc;
+	newmap->w = map->w;
+	newmap->h = map->h;
+
+	if ((newmap->tab = malloc(sizeof(char*) * (map->h))) == NULL)
+        return (trace(NULL, "copy_map: malloc failed2"));
+	for (i = 0; i < map->h; i++)
+	{
+		if ((newmap->tab[i] = malloc((map->w) * sizeof(char))) == NULL)
+            return (trace(NULL, "copy_map: malloc failed3"));
+		for (j = 0; j < map->w; j++)
+	 	{
+	 		tmp = map->tab[i][j];
+	 		newmap->tab[i][j] = tmp;
+	 	}
+
+		newmap->resrc = map->resrc;
 	if ((newmap->resrc.tab = malloc(sizeof(t_rsrc) * (map->resrc.len))) == NULL)
-        return (trace(NULL, "copy_map: malloc failed"));
+        return (trace(NULL, "copy_map: malloc failed4"));
 	for (i = 0; i < map->resrc.len; i++)
 		{
 			vect_tmp = map->resrc.tab[i].coord;
@@ -133,22 +162,11 @@ t_map 		*copy_map(t_map *map)
 			newmap->resrc.tab[i].visited = map->resrc.tab[i].visited;		
 		}
 
-	newmap->w = map->w;
-	newmap->h = map->h;
-	if ((newmap->tab = malloc(sizeof(char*) * (map->h + 1))) == NULL);
-        return (trace(NULL, "copy_map: malloc failed"));
-
-	for (i = 0; i < map->h; i++)
-	{
-		if ((newmap->tab[i] = malloc((map->w + 1) * sizeof(char))) == NULL)
-            return (trace(NULL, "copy_map: malloc failed"));
-		for (j = 0; j < map->w; j++)
-	 	{
-	 		tmp = map->tab[i][j];
-	 		newmap->tab[i][j] = tmp;
-	 		my_putchar(tmp);
-	 	}
 	}
+	my_putstr("map inside copymap : ");
+	print_finish(map);
+	my_putstr("newmap inside copymap : ");
+	print_finish(map);
 	return (newmap);
 }
 
@@ -198,9 +216,13 @@ void		get_solutions(t_map *map, t_da *solutions, t_path *path)
 	print_path(path);
 	if (map->init.pv >= dist_exit(map, map->start))
 	{
+		print_finish(map);
 		my_putstr("case 1\n");
         path_push(path, map->finish);
-		da_push(solutions, path_copy(*path));
+		print_path(path);
+		print_path(path_copy(path));
+		da_push(solutions, path_copy(path));
+		print_path(path);
 		my_putstr("solutions atm --------- \n");
 		print_solutions(solutions);
 		my_putstr("------------\n");
@@ -217,16 +239,19 @@ void		get_solutions(t_map *map, t_da *solutions, t_path *path)
 				my_putstr("newpv = ");
 				my_put_nbr(newpv);
 				my_putstr("\n");
+				print_finish(map);
 				if (newpv != 0)
 				{
 					map_tmp = copy_map(map);
-					path_tmp = path_copy(*path);
-
+					path_tmp = path_copy(path);
+					my_putstr("map_Tmp ");
+					print_finish(map_tmp);
 					pos = map_tmp->start = map->resrc.tab[i].coord;
 					map_tmp->init.pv = newpv;
 					map_tmp->resrc.tab[i].visited = 1;
 
 					path_tmp->dist += vect_dist(map->resrc.tab[i].coord, map->start);
+					 print_path(path);
 					path_push(path_tmp, pos);
 					get_solutions(map_tmp, solutions, path_tmp);
 				}
@@ -247,6 +272,7 @@ void print_resrc_tab(t_map *map)
 		printf("resrc %d: (%d, %d), visited = %d\n", i, map->resrc.tab[i].coord.x, map->resrc.tab[i].coord.y, map->resrc.tab[i].visited);
 	}
 }
+
 
 void	path_new(t_path *path, t_map *map)
 {

@@ -14,27 +14,41 @@ int	my_strlen(char *str);
 
 int	my_getnbr(char *str)
 {
-  int	i;
-  int	s;
-  int	x;
+    int	i;
+    int	s;
+    int	x;
 
-  i = 0;
-  s = 1;
-  x = 0;
-  while (!(str[i] <= '9' && str[i] >= '0'))
+    i = 0;
+    s = 1;
+    x = 0;
+    while (!(str[i] <= '9' && str[i] >= '0'))
     {
       if (str[i] == '+')
-	s *= 1;
-      else if (str[i] == '-')
-	s *= -1;
-      else
-	return (0);
-      i++;
-    }
-  while (str[i] <= '9' && str[i] >= '0')
+         s *= 1;
+     else if (str[i] == '-')
+         s *= -1;
+     else
+         return (0);
+     i++;
+ }
+ while (str[i] <= '9' && str[i] >= '0')
+ {
+    x *= 10;
+    x += (int)str[i++] - 48;
+}
+return (x * s);
+}
+
+int my_isint(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '\0')
     {
-      x *= 10;
-      x += (int)str[i++] - 48;
+      if (!(str[i] <= '9' && str[i] >= '0'))
+        return (0);
+        i++;
     }
-  return (x * s);
+return (1);
 }

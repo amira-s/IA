@@ -36,7 +36,7 @@ INC_DIR		=	.
 
 OBJ			=	$(SRC:%.c=%.o)
 
-CFLAGS		=   -g -W -Wall -Werror -pedantic -ansi -Wextra
+CFLAGS		=   -g -W -Wall -pedantic -ansi -Wextra
 
 CC			=	gcc
 
