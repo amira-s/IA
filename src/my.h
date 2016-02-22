@@ -20,6 +20,7 @@ char		*my_strcat(char *, char *);
 char		*my_strdup(char *);
 void        my_swap(void* a, void* b, int size);
 void        *noop(void*);
+void        *trace(void*, char* msg);
 
 t_map 		*copy_map(t_map *map);
 t_vect      path_pop(t_path *p);

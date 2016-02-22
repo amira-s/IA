@@ -24,6 +24,7 @@ SRC 		=	lib/my_putchar.c 		\
 				lib/memcpy.c 	        \
 				lib/vect.c   	        \
 				lib/vect2.c   	        \
+				lib/trace.c   	        \
 				src/getmap.c 			\
 				src/play.c 				\
 				src/outcome.c 			\

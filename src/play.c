@@ -99,7 +99,8 @@ t_path 		*path_copy(t_path path)
 	newpath->dist = path.dist;
 	newpath->len = path.len;
 
-	newpath->tab = malloc(path.len * sizeof(t_vect));
+	if ((newpath->tab = malloc(path.len * sizeof(t_vect))) == NULL)
+        return (trace(NULL, "path_copy: malloc failed"));
 	for (i = 0; i <  path.len; i++)
 		newpath->tab[i] = path.tab[i];
 	return (newpath);
@@ -112,7 +113,8 @@ t_map 		*copy_map(t_map *map)
 	int j;
 	char tmp;
 
-	newmap = malloc(sizeof(map));
+	if ((newmap = malloc(sizeof(map))) == NULL)
+        return (trace(NULL, "copy_map: malloc failed"));
 
 	newmap->init.r = map->init.r;
 	newmap->init.pv = map->init.pv;
@@ -120,19 +122,22 @@ t_map 		*copy_map(t_map *map)
 	newmap->start = map->start;
 	newmap->finish = map->finish;
 
-	newmap->resrc.len = map->resrc.len;
-	newmap->resrc.tab = malloc(sizeof(t_vect) * map->resrc.len);
+	newmap->resrc = map->resrc;
+	if ((newmap->resrc.tab = malloc(sizeof(t_rsrc) * (map->resrc.len))) == NULL)
+        return (trace(NULL, "copy_map: malloc failed"));
 
 	for (i = 0; i < map->resrc.len; i++)
 		newmap->resrc.tab[i] = map->resrc.tab[i];
 
 	newmap->w = map->w;
 	newmap->h = map->h;
-	newmap->tab = malloc(sizeof(char*) * (map->h +1));
+	if ((newmap->tab = malloc(sizeof(char*) * (map->h + 1))) == NULL);
+        return (trace(NULL, "copy_map: malloc failed"));
 
 	for (i = 0; i < map->h; i++)
 	{
-		newmap->tab[i] = malloc((map->w + 1) * sizeof(char));
+		if ((newmap->tab[i] = malloc((map->w + 1) * sizeof(char))) == NULL)
+            return (trace(NULL, "copy_map: malloc failed"));
 	    for (j = 0; j < map->w; j++)
 	 	{
 	 		tmp = map->tab[i][j];
