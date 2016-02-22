@@ -112,6 +112,7 @@ t_map 		*copy_map(t_map *map)
 	int i;
 	int j;
 	char tmp;
+	t_vect vect_tmp;
 
 	if ((newmap = malloc(sizeof(map))) == NULL)
         return (trace(NULL, "copy_map: malloc failed"));
@@ -125,9 +126,12 @@ t_map 		*copy_map(t_map *map)
 	newmap->resrc = map->resrc;
 	if ((newmap->resrc.tab = malloc(sizeof(t_rsrc) * (map->resrc.len))) == NULL)
         return (trace(NULL, "copy_map: malloc failed"));
-
 	for (i = 0; i < map->resrc.len; i++)
-		newmap->resrc.tab[i] = map->resrc.tab[i];
+		{
+			vect_tmp = map->resrc.tab[i].coord;
+			newmap->resrc.tab[i].coord = vect_tmp;
+			newmap->resrc.tab[i].visited = map->resrc.tab[i].visited;		
+		}
 
 	newmap->w = map->w;
 	newmap->h = map->h;
@@ -138,13 +142,13 @@ t_map 		*copy_map(t_map *map)
 	{
 		if ((newmap->tab[i] = malloc((map->w + 1) * sizeof(char))) == NULL)
             return (trace(NULL, "copy_map: malloc failed"));
-	    for (j = 0; j < map->w; j++)
+		for (j = 0; j < map->w; j++)
 	 	{
 	 		tmp = map->tab[i][j];
 	 		newmap->tab[i][j] = tmp;
+	 		my_putchar(tmp);
 	 	}
 	}
-
 	return (newmap);
 }
 
