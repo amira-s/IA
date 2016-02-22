@@ -30,13 +30,14 @@ SRC 		=	lib/my_putchar.c 		\
 				src/outcome.c 			\
 				src/paths.c 			\
 				src/print.c 			\
+				src/init.c 				\
 				src/solve.c
 
 INC_DIR		=	.
 
 OBJ			=	$(SRC:%.c=%.o)
 
-CFLAGS		=   -g -W -Wall -pedantic -ansi -Wextra
+CFLAGS		=   -g -W -Wall -Werror -pedantic -ansi -Wextra
 
 CC			=	gcc
 

@@ -47,3 +47,30 @@ void print_solutions(t_da *solutions)
 {
     da_foreach(solutions, _print_solution);
 }
+
+
+/*temporaire*/
+void print_resrc_tab(t_map *map)
+{
+    int i;
+
+    my_putstr("-----------\n");
+    for (i = 0; i < map->resrc.len; i++)
+    {
+        printf("resrc %d: (%d, %d), visited = %d\n", i, map->resrc.tab[i].coord.x, map->resrc.tab[i].coord.y, map->resrc.tab[i].visited);
+    }
+    my_putstr("-----------\n");
+}
+
+void    print_resrc(t_map *map, int i)
+{
+    my_putstr("resrc ");
+    my_put_nbr(i);
+    my_putstr(": (");
+    my_put_nbr(map->resrc.tab[i].coord.x);
+    my_putstr(", ");
+    my_put_nbr(map->resrc.tab[i].coord.y);
+    my_putstr("), visited = ");
+    my_put_nbr(map->resrc.tab[i].visited);
+    my_putstr(" \n");
+}

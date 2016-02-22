@@ -22,24 +22,30 @@ void        my_swap(void* a, void* b, int size);
 void        *noop(void*);
 void        *trace(void*, char* msg);
 void 		my_memcpy(void *dest, void *src, int size);
-int my_isint(char *str);
+int 		my_isint(char *str);
 
-t_map 		*copy_map(t_map *map);
+/*path.c*/
 t_vect      path_pop(t_path *p);
 void        path_push(t_path *p, t_vect v);
-void		get_solutions(t_map *map, t_da *solutions, t_path *path);
-void        print_path(t_path *path);
-void        print_solutions(t_da *solutions);
+void		path_new(t_path *path, t_map *map);
+t_path 		*path_copy(t_path *path);
 
-/*play.c*/
+/*init.c*/
 void 		init_pos(t_map *);
 void 		fin_pos(t_map *);
-int      	dist_exit(t_map *map, t_vect v);
 void 		fill_resrc(t_map *);
+
+/*play.c*/
+int      	dist_exit(t_map *map, t_vect v);
 int 		reachable(t_map *map, int x, int y);
-void		path_new(t_path *path, t_map *map);
+void		sort_solutions(t_da *solutions);
+t_map 		*copy_map(t_map *map);
+void		get_solutions(t_map *map, t_da *solutions, t_path *path);
+
+/*print.c*/
+void        print_path(t_path *path);
+void        print_solutions(t_da *solutions);
 void 		print_resrc_tab(t_map *map);
-t_path 		*path_copy(t_path *path);
 
 /*getmap.c*/
 void    	freetab(t_map *);

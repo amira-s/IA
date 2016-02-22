@@ -28,6 +28,8 @@ int 	game(t_map *map)
 	path_new(&path, map);
 	get_solutions(map, solutions, &path);
 	print_solutions(solutions);
+/*	sort_solutions(solutions);
+	print_solutions(solutions);*/
 	if (solutions->length > 0)
 	{
 		return (won());
