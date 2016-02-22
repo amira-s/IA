@@ -2,3 +2,4 @@
 solve
 
 *.o
+*.dSYM
