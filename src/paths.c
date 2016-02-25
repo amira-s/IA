@@ -4,22 +4,27 @@
 t_vect path_pop(t_path *p)
 {
     t_vect v;
+    t_vect prev;
 
     if (p->len <= 0) {
         my_putstr("ERROR: path_pop: empty path (len <= 0)\n");
         return (v);
     }
 
+    prev = p->tab[p->len - 2];
     v = p->tab[p->len - 1];
-    p->dist -= v.x + v.y;
+    p->dist -= vect_dist(v, prev);
     p->len -= 1;
     return (v);
 }
 
 void path_push(t_path *p, t_vect v)
 {
+    t_vect prev;
+
+    prev = p->tab[p->len - 1];
     p->tab[p->len] = v;
-    p->dist += v.x + v.y;
+    p->dist += vect_dist(v, prev);
     p->len += 1;
 }
 
@@ -45,9 +50,6 @@ t_path      *path_copy(t_path *path)
 
     if ((newpath->tab = malloc(tab_size)) == NULL)
         return (trace(NULL, "path_copy: malloc failed"));
-
-
-
     for (i = 0; i <  path->len; i++)
         newpath->tab[i] = path->tab[i]; 
     return (newpath);

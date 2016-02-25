@@ -27,15 +27,17 @@ int 	game(t_map *map)
 	solutions = da_new(sizeof(t_path));
 	path_new(&path, map);
 	get_solutions(map, solutions, &path);
-	print_solutions(solutions);
-/*	sort_solutions(solutions);
+/*	print_solutions(solutions);
+	sort_solutions(solutions);
+	my_putstr("\n----------\n");
 	print_solutions(solutions);*/
 	if (solutions->length > 0)
 	{
-		return (won());
+		move(*map, (t_path*)da_at(solutions, 0), solutions);
+		return (1);
 	}
-	else
-		my_putstr("KO\n");
+	
+	my_putstr("KO\n");
 	return (0);
 }
 

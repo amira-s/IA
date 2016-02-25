@@ -1,5 +1,4 @@
 #include "my.h"
-#include <stdio.h>
 
 int 	dist_exit(t_map *map, t_vect v)
 {
@@ -28,8 +27,7 @@ t_map 		*copy_map(t_map *map)
 	t_vect vect_tmp;
 
 	if ((newmap = malloc(sizeof(*map))) == NULL)
-        return (trace(NULL, "copy_map: malloc failed1"));
-
+        return (trace(NULL, "copy_map: malloc failed1\n"));
 	newmap->init = map->init;
 	newmap->start = map->start;
 	newmap->finish = map->finish;
@@ -38,20 +36,21 @@ t_map 		*copy_map(t_map *map)
 	newmap->h = map->h;
 
 	if ((newmap->tab = malloc(sizeof(char*) * (map->h))) == NULL)
-        return (trace(NULL, "copy_map: malloc failed2"));
+        return (trace(NULL, "copy_map: malloc failed2\n"));
 	for (i = 0; i < map->h; i++)
 	{
 		if ((newmap->tab[i] = malloc((map->w) * sizeof(char))) == NULL)
-            return (trace(NULL, "copy_map: malloc failed3"));
+            return (trace(NULL, "copy_map: malloc failed3\n"));
 		for (j = 0; j < map->w; j++)
 	 	{
 	 		tmp = map->tab[i][j];
 	 		newmap->tab[i][j] = tmp;
 	 	}
 
-		newmap->resrc = map->resrc;
+	}
+	newmap->resrc = map->resrc;
 	if ((newmap->resrc.tab = malloc(sizeof(t_rsrc) * (map->resrc.len))) == NULL)
-        return (trace(NULL, "copy_map: malloc failed4"));
+        return (trace(NULL, "copy_map: malloc failed4\n"));
 	for (i = 0; i < map->resrc.len; i++)
 		{
 			vect_tmp = map->resrc.tab[i].coord;
@@ -59,7 +58,7 @@ t_map 		*copy_map(t_map *map)
 			newmap->resrc.tab[i].visited = map->resrc.tab[i].visited;		
 		}
 
-	}
+	
 	return (newmap);
 }
 
@@ -70,20 +69,22 @@ void		sort_solutions(t_da *solutions)
 	int  	min;
 	int     min_dist;
 
-	for (i = 0; i < solutions->length - 2; i++)
+	for (i = 0; i < solutions->length - 1; i++)
 	{
 		min = i;
 		min_dist = ((t_path*)da_at(solutions, min))->dist;
-		for (k = i + 1; k <  solutions->length - 1 ; k++)
+		for (k = i + 1; k <  solutions->length ; k++)
 		{
 			if (((t_path*)da_at(solutions, k))->dist  < min_dist)
 				min = k;
 		}
 		if (min != i)
 			da_swap(solutions, i, min);
+		my_putstr("\n--------\nrun ");
+		my_put_nbr(i);
+		my_putstr("\n");
+		print_solutions(solutions);
 	}
-	print_solutions(solutions);
-
 }
 
 void		get_solutions(t_map *map, t_da *solutions, t_path *path)
@@ -113,7 +114,6 @@ void		get_solutions(t_map *map, t_da *solutions, t_path *path)
 					pos = map_tmp->start = map->resrc.tab[i].coord;
 					map_tmp->init.pv = newpv;
 					map_tmp->resrc.tab[i].visited = 1;
-					path_tmp->dist += vect_dist(map->resrc.tab[i].coord, map->start);
 					path_push(path_tmp, pos);
 					get_solutions(map_tmp, solutions, path_tmp);
 				}

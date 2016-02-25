@@ -1,6 +1,6 @@
 #include "my.h"
 
-#define DEFAULT_RESRC_BUFFER_COUNT 50
+#define DEFAULT_RESRC 50
 
 void 	init_pos(t_map *map)
 {
@@ -31,15 +31,15 @@ void 	fill_resrc(t_map *map)
 	int j;
 	int k;
 
-	if ((map->resrc.tab = malloc(sizeof(*(map->resrc.tab)) * DEFAULT_RESRC_BUFFER_COUNT)) == NULL)
+	if ((map->resrc.tab = malloc(sizeof(*(map->resrc.tab)) * DEFAULT_RESRC)) == NULL)
 		return ;
 	for (i = 0, k = 0; i < map->h; i++)
 	    for (j = 0; j < map->w; j++)
 	    	if (map->tab[i][j] == '+')
 	    	{
-                if (k > DEFAULT_RESRC_BUFFER_COUNT)
+                if (k > DEFAULT_RESRC)
                     map->resrc.tab = realloc(map->resrc.tab,
-                        sizeof(t_vect) * (k + DEFAULT_RESRC_BUFFER_COUNT));
+                        sizeof(t_vect) * (k + DEFAULT_RESRC));
 	    		map->resrc.tab[k].coord = vect(i, j);
 	    		map->resrc.tab[k].visited = 0;
 	    		k++;

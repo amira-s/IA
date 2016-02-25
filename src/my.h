@@ -46,6 +46,7 @@ void		get_solutions(t_map *map, t_da *solutions, t_path *path);
 void        print_path(t_path *path);
 void        print_solutions(t_da *solutions);
 void 		print_resrc_tab(t_map *map);
+void    print_resrc(t_map *map, int i);
 
 /*getmap.c*/
 void    	freetab(t_map *);
@@ -56,5 +57,7 @@ void    	print_t(t_map *map);
 
 /*outcome.c*/
 int 		won();
+void print_map(t_map map);
+void move(t_map map, t_path *path, t_da *solutions);
 
 #endif /* __MY__ */
