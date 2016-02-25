@@ -29,6 +29,8 @@ int da_swap(t_da *da, int i, int j)
     if (i < 0 || i > da->length || j < 0 || j > da->length)
         return (1);
     if (i != j)
-        my_swap((char*)da->data + i, (char*)da->data + j, da->size);
+        my_swap((char*)da->data + (i * da->size),
+                (char*)da->data + (j * da->size),
+                da->size);
     return (0);
 }
