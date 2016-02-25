@@ -67,15 +67,14 @@ void		sort_solutions(t_da *solutions)
 	int 	i;
 	int 	k;
 	int  	min;
-	int     min_dist;
 
 	for (i = 0; i < solutions->length - 1; i++)
 	{
 		min = i;
-		min_dist = ((t_path*)da_at(solutions, min))->dist;
-		for (k = i + 1; k <  solutions->length ; k++)
+		for (k = i + 1; k < solutions->length ; k++)
 		{
-			if (((t_path*)da_at(solutions, k))->dist < min_dist)
+			if (((t_path*)da_at(solutions, k))->dist <
+                    ((t_path*)da_at(solutions, min))->dist)
 				min = k;
 		}
 		if (min != i)

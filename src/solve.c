@@ -11,8 +11,6 @@
 #include "my.h"
 #include <stdio.h>
 
-void my_memcpy(void *dest, void *src, int size);
-
 int 	game(t_map *map)
 {
 	t_da	*solutions;
@@ -27,18 +25,16 @@ int 	game(t_map *map)
 	solutions = da_new(sizeof(t_path));
 	path_new(&path, map);
 	get_solutions(map, solutions, &path);
-	print_solutions(solutions);
 	sort_solutions(solutions);
 	my_putstr("\n----------\n");/*DEBUG*/
 	print_solutions(solutions);
-	if (solutions->length > 0)
-	{
-		move(*map, (t_path*)da_at(solutions, 0), solutions);
-		return (1);
-	}
-	
-	my_putstr("KO\n");
-	return (0);
+	if (solutions->length == 0)
+    {
+        my_putstr("KO\n");
+        return (0);
+    }
+    /*move(*map, (t_path*)da_at(solutions, 0), solutions);*/
+    return (1);
 }
 
 void	*verif(char *argv[])
@@ -59,25 +55,25 @@ int		main(int argc, char *argv[])
 {
     t_map *map;
 
-	if (argc == 4)
+	if (argc != 4)
 	{
-		map = verif(argv);
-		if (map != 0)
-		{
-
-			map->init.pv = my_getnbr(argv[1]);
-			map->init.r = my_getnbr(argv[2]);
-			init_pos(map);
-			fin_pos(map);
-			fill_resrc(map);
-
-			game(map);
-		}
-		else
-			my_putstr("-> Error invalid arguments/usage\n");
-	}
-	else
 		my_putstr("-> Error number arguments/Usage\n");
+        return (1);
+    }
+
+    map = verif(argv);
+    if (map != 0)
+    {
+        map->init.pv = my_getnbr(argv[1]);
+        map->init.r = my_getnbr(argv[2]);
+        init_pos(map);
+        fin_pos(map);
+        fill_resrc(map);
+
+        game(map);
+    }
+    else
+        my_putstr("-> Error invalid arguments/usage\n");
 	return (0);
 }
 
