@@ -33,7 +33,7 @@ int 	game(t_map *map)
         my_putstr("KO\n");
         return (0);
     }
-    /*move(*map, (t_path*)da_at(solutions, 0), solutions);*/
+    move(*map, (t_path*)da_at(solutions, 0), solutions);
     return (1);
 }
 

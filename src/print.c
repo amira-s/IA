@@ -9,11 +9,11 @@ void print_path(t_path *path)
     for (i = 0, vects = path->tab; i < path->len; i++)
     {
         v = vects + i;
-        my_putstr("{");
+        my_putstr(FG_YELLOW"{"COLOR_RESET);
         my_put_nbr(v->x);
-        my_putstr(",");
+        my_putstr(FG_YELLOW","COLOR_RESET);
         my_put_nbr(v->y);
-        my_putstr("} ");
+        my_putstr(FG_YELLOW"} "COLOR_RESET);
     }
     my_putstr("\n");
 }
@@ -33,12 +33,12 @@ void _print_solution(void *solution, int index, void* _)
     path = (t_path*)solution;
     movesc = path->dist;
 
-    my_putstr("== Solution ");
+    my_putstr(BG_BLACK""FG_RED"Solution ");
     my_put_nbr(index);
-    my_putstr(" (");
+    my_putstr(" ("FG_BLUE);
     my_put_nbr(movesc);
-    put_str_mb_plural(" move", movesc);
-    my_putstr(")\n");
+    put_str_mb_plural(FG_RED" move", movesc);
+    my_putstr(")"COLOR_RESET"\n");
     print_path(path);
     noop(_);
 }

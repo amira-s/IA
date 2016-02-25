@@ -6,6 +6,7 @@
 #include "my_struct.h"
 #include "../lib/dynamic_array.h"
 #include "../lib/vect.h"
+#include "../lib/colors.h"
 
 #include <stdio.h> /* DEBUG */
 
