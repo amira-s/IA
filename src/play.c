@@ -75,15 +75,11 @@ void		sort_solutions(t_da *solutions)
 		min_dist = ((t_path*)da_at(solutions, min))->dist;
 		for (k = i + 1; k <  solutions->length ; k++)
 		{
-			if (((t_path*)da_at(solutions, k))->dist  < min_dist)
+			if (((t_path*)da_at(solutions, k))->dist < min_dist)
 				min = k;
 		}
 		if (min != i)
 			da_swap(solutions, i, min);
-		my_putstr("\n--------\nrun ");
-		my_put_nbr(i);
-		my_putstr("\n");
-		print_solutions(solutions);
 	}
 }
 
