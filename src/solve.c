@@ -1,10 +1,20 @@
+/*
+** solve.c for AI in /home/amira_s/src/AI
+** 
+** Made by AMIRA Syrine
+** Login   <amira_s@etna-alternance.net>
+** 
+** Started on  Mon Feb 22 09:15:10 2016 AMIRA Syrine
+** Last update Fri Mar 04 16:52:33 2016 AMIRA Syrine
+*/
+
 #include "my.h"
 #include <stdio.h>
 
 int lose(t_map *map)
 {
     print_map(map);
-    my_putstr("KO\n");
+    my_putstr(MSG_NO_SOLUTIONS_FOUND"\n");
     return (0);
 }
 

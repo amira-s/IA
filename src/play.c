@@ -1,11 +1,18 @@
+/*
+** play.c for AI in /home/amira_s/src/AI
+** 
+** Made by AMIRA Syrine
+** Login   <amira_s@etna-alternance.net>
+** 
+** Started on  Mon Feb 22 09:15:10 2016 AMIRA Syrine
+** Last update Fri Mar 04 16:52:33 2016 AMIRA Syrine
+*/
+
 #include "my.h"
 
-int 	dist_exit(t_map *map, t_vect v)
-{
-	return (vect_dist(v, map->finish));
-}
+#define DIST_EXIT(map, v) (vect_dist((v), (map)->finish))
 
-int 	reachable(t_map *map, int x, int y)
+int reachable(t_map *map, int x, int y)
 {
 	int dist;
 	int newpv;
@@ -18,7 +25,7 @@ int 	reachable(t_map *map, int x, int y)
 		return (0);
 }
 
-void		sort_solutions(t_da *solutions)
+void sort_solutions(t_da *solutions)
 {
 	int 	i;
 	int 	k;
@@ -38,14 +45,38 @@ void		sort_solutions(t_da *solutions)
 	}
 }
 
+#define MAKES_MAP_PATH_COPIES(map, path, map_tmp, path_tmp) do { \
+} while (0);
+
+#define FREE_MAP_PATH(map, path) do {\
+    free_map(map_tmp); \
+    free_path(path_tmp); \
+} while (0);
+
+static void step_map(t_da *solutions, t_map *map, t_path *path,
+                     int newpv, int i)
+{
+	t_vect 	pos;
+	t_map 	*map_tmp;
+	t_path  *path_tmp;
+
+    map_tmp = copy_map(map);
+    map_tmp->init.pv = newpv;
+    map_tmp->resrc.tab[i].visited = 1;
+
+    path_tmp = path_copy(path);
+
+    pos = map_tmp->start = map->resrc.tab[i].coord;
+    path_push(path_tmp, pos);
+    get_solutions(map_tmp, solutions, path_tmp);
+
+    free_map(map_tmp);
+}
 
 static void scan_resources(t_map *map, t_da *solutions, t_path *path)
 {
 	int 	i;
 	int 	newpv;
-	t_vect 	pos;
-	t_map 	*map_tmp;
-	t_path  *path_tmp;
 
     for (i = 0; i < map->resrc.len; i++)
         if (map->resrc.tab[i].visited == 0)
@@ -54,25 +85,17 @@ static void scan_resources(t_map *map, t_da *solutions, t_path *path)
                               map->resrc.tab[i].coord.y);
             if (newpv != 0)
             {
-                map_tmp = copy_map(map);
-                path_tmp = path_copy(path);
-                pos = map_tmp->start = map->resrc.tab[i].coord;
-                map_tmp->init.pv = newpv;
-                map_tmp->resrc.tab[i].visited = 1;
-                path_push(path_tmp, pos);
-                get_solutions(map_tmp, solutions, path_tmp);
-                free_map(map_tmp);
-                free_path(path_tmp);
+                step_map(solutions, map, path, newpv, i);
             }
         }
 }
 
 void get_solutions(t_map *map, t_da *solutions, t_path *path)
 {
-	if (map->init.pv >= dist_exit(map, map->start))
+	if (map->init.pv >= DIST_EXIT(map, map->start))
 	{
         path_push(path, map->finish);
-		da_push(solutions, path_copy(path));
+		da_push(solutions, path);
 	}
 	else
         scan_resources(map, solutions, path);

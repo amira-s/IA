@@ -1,3 +1,13 @@
+/*
+** copymap.c for AI in /home/amira_s/src/AI
+** 
+** Made by AMIRA Syrine
+** Login   <amira_s@etna-alternance.net>
+** 
+** Started on  Mon Feb 22 09:15:10 2016 AMIRA Syrine
+** Last update Fri Mar 04 16:52:33 2016 AMIRA Syrine
+*/
+
 #include "my.h"
 
 static char **copy_map_grid(t_map *map)

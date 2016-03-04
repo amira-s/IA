@@ -1,3 +1,13 @@
+/*
+** print.c for AI in /home/amira_s/src/AI
+** 
+** Made by AMIRA Syrine
+** Login   <amira_s@etna-alternance.net>
+** 
+** Started on  Mon Feb 22 09:15:10 2016 AMIRA Syrine
+** Last update Fri Mar 04 16:52:33 2016 AMIRA Syrine
+*/
+
 #include "my.h"
 
 void print_path(t_path *path)
@@ -33,12 +43,12 @@ void _print_solution(void *solution, int index, void* _)
     path = (t_path*)solution;
     movesc = path->dist;
 
-    my_putstr(BG_BLACK""FG_RED"Solution ");
+    my_putstr(BG_WHITE""FG_RED" Solution ");
     my_put_nbr(index);
     my_putstr(" ("FG_BLUE);
     my_put_nbr(movesc);
     put_str_mb_plural(FG_RED" move", movesc);
-    my_putstr(")"COLOR_RESET"\n");
+    my_putstr(") "COLOR_RESET"\n");
     print_path(path);
     noop(_);
 }

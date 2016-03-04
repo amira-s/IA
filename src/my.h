@@ -1,3 +1,13 @@
+/*
+** my.h for AI in /home/amira_s/src/AI
+** 
+** Made by AMIRA Syrine
+** Login   <amira_s@etna-alternance.net>
+** 
+** Started on  Mon Feb 22 09:15:10 2016 AMIRA Syrine
+** Last update Fri Mar 04 16:52:33 2016 AMIRA Syrine
+*/
+
 #ifndef __MY__
 # define __MY__
 
@@ -7,9 +17,12 @@
 #include "../lib/dynamic_array.h"
 #include "../lib/vect.h"
 #include "../lib/colors.h"
+
 #include "config.h"
 
+#ifdef DEBUG
 #include <stdio.h> /* DEBUG */
+#endif /* DEBUG */
 
 /*/lib*/
 void		my_putchar(char c);

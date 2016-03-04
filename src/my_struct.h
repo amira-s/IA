@@ -1,11 +1,11 @@
 /*
-** asciifun.c for octocat in /home/amira_s/octo/src
-**
+** my_struct.h for AI in /home/amira_s/src/AI
+** 
 ** Made by AMIRA Syrine
 ** Login   <amira_s@etna-alternance.net>
-**
-** Started on  Fri Jan  22 16:23:25 2015 AMIRA Syrine
-** Last update Fri Jan  22 16:45:07 2015 AMIRA Syrine
+** 
+** Started on  Mon Feb 22 09:15:10 2016 AMIRA Syrine
+** Last update Fri Mar 04 16:52:33 2016 AMIRA Syrine
 */
 
 #ifndef __MY_STRUCT__

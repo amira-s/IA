@@ -1,19 +1,21 @@
 /*
-** fjkdh for octocat in /home/amira_s/octo/src
+** outcome.c for AI in /home/amira_s/src/AI
 ** 
 ** Made by AMIRA Syrine
 ** Login   <amira_s@etna-alternance.net>
 ** 
-** Started on  Fri Jan  22 16:23:25 2015 AMIRA Syrine
-** Last update Fri Jan  22 16:45:07 2015 AMIRA Syrine
+** Started on  Mon Feb 22 09:15:10 2016 AMIRA Syrine
+** Last update Fri Mar 04 16:52:33 2016 AMIRA Syrine
 */
 
 #include "my.h"
 #include <unistd.h>
 
-#define DELAY 100000
-
+#ifndef DEBUG
 #define TERM_CLEAR_SIGNAL "\033[1;1H\033[2J"
+#else
+#define TERM_CLEAR_SIGNAL ""
+#endif /* DEBUG */
 
 void init_cond(int(**comp)(int, int), int *inc1, int a, int b);
 
@@ -43,14 +45,14 @@ void print_map(t_map *map)
 
 void swap(t_map *map, int i, int j)
 {
-	map->tab[map->start.x][map->start.y] = '-';
+    map->tab[map->start.x][map->start.y] = '-';
 	map->tab[i][j] = '@';
 	map->start = vect(i, j);
 }
 
 #define PRINT_MAP_AT(map, x, y) \
 do { \
-    usleep(DELAY); \
+    usleep(ANIM_DELAY); \
     swap(map, x, y); \
     print_map(map); \
 } while(0);
