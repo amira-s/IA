@@ -48,8 +48,7 @@ void print_solutions(t_da *solutions)
     da_foreach(solutions, _print_solution);
 }
 
-
-/*temporaire*/
+#ifdef DEBUG
 void print_resrc_tab(t_map *map)
 {
     int i;
@@ -61,6 +60,7 @@ void print_resrc_tab(t_map *map)
     }
     my_putstr("-----------\n");
 }
+#endif /* DEBUG */
 
 void    print_resrc(t_map *map, int i)
 {

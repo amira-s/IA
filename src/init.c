@@ -31,7 +31,8 @@ void 	fill_resrc(t_map *map)
 	int j;
 	int k;
 
-	if ((map->resrc.tab = malloc(sizeof(*(map->resrc.tab)) * DEFAULT_RESRC)) == NULL)
+	if ((map->resrc.tab = malloc(
+                    sizeof(*(map->resrc.tab)) * DEFAULT_RESRC)) == NULL)
 		return ;
 	for (i = 0, k = 0; i < map->h; i++)
 	    for (j = 0; j < map->w; j++)

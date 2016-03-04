@@ -59,9 +59,7 @@ int    check_map(t_map *map)
     int s;
     int e;
 
-    t = 0;
-    s = 0;
-    e = 0;
+    t = s = e = 0;
     for (i = 0; i < map->h; i++)
     {
         for (j = 0; j < map->w; j++)
@@ -97,6 +95,12 @@ void    print_t(t_map *map)
             my_putstr("~~~~~~~ \n");
 }
 
+#define ERR_CORRUPTED_MAP "\033[91m-> La map que vous essayez de charger\
+ est corrompue.\033[0m\n"
+
+#define ERR_LOADING "\033[91m-> Erreur lors du chargement du \
+fichier.\033[0m\n"
+
 void    *get_map(char *input)
 {
     int   fd;
@@ -106,7 +110,7 @@ void    *get_map(char *input)
     fd = open(input, O_RDWR);
     if (fd == -1)
     {
-        my_putstr("\033[91m-> Erreur lors du chargement du fichier.\033[0m\n");
+        my_putstr(ERR_LOADING);
         return (0);
     }
     else
@@ -114,7 +118,7 @@ void    *get_map(char *input)
     print_t(map);
     if (check_map(map) == 0)
     {
-        my_putstr("\033[91m-> La map que vous essayez de charger est corrompue.\033[0m\n");
+        my_putstr(ERR_CORRUPTED_MAP);
         return (0);
     }
     else

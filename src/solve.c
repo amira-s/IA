@@ -16,7 +16,6 @@ int 	game(t_map *map)
 	t_da	*solutions;
 	t_path	path;
 
-	print_resrc_tab(map);
 	solutions = da_new(sizeof(t_path));
 	path_new(&path, map);
 	get_solutions(map, solutions, &path);
@@ -55,7 +54,6 @@ int		main(int argc, char *argv[])
 		my_putstr("-> Error number arguments/Usage\n");
         return (1);
     }
-
     map = verif(argv);
     if (map != 0)
     {
@@ -64,11 +62,13 @@ int		main(int argc, char *argv[])
         init_pos(map);
         fin_pos(map);
         fill_resrc(map);
-
         game(map);
     }
     else
+    {
         my_putstr("-> Error invalid arguments/usage\n");
+        return (1);
+    }
 	return (0);
 }
 
