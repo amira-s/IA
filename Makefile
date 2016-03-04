@@ -28,6 +28,7 @@ SRC 		=	lib/my_putchar.c 		\
 				src/getmap.c 			\
 				src/play.c 				\
 				src/outcome.c 			\
+				src/outcome_init.c		\
 				src/paths.c 			\
 				src/print.c 			\
 				src/copymap.c			\

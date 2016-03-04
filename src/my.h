@@ -60,8 +60,8 @@ void    	print_t(t_map *map);
 
 /*outcome.c*/
 int         won();
-void        print_map(t_map map);
-void        move(t_map map, t_path *path, t_da *solutions);
+void        print_map(t_map *map);
+void        move(t_map *map, t_path *path);
 
 /*freeing*/
 void        free_map(t_map *map);

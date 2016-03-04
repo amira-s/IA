@@ -16,24 +16,19 @@ int 	game(t_map *map)
 	t_da	*solutions;
 	t_path	path;
 
-	printf("player: (%d, %d) \n", map->start.x, map->start.y);
-	printf("finish: (%d,%d) \n" , map->finish.x, map->finish.y);
-	printf("(r, pv): (%d, %d)\n", map->init.r, map->init.pv);
-	printf("map(w,h): (%d,%d) \n" , map->w, map->h);
-	printf("dist = %d\n", dist_exit(map, map->start));
 	print_resrc_tab(map);
 	solutions = da_new(sizeof(t_path));
 	path_new(&path, map);
 	get_solutions(map, solutions, &path);
 	sort_solutions(solutions);
-	my_putstr("\n----------\n");/*DEBUG*/
-	print_solutions(solutions);
 	if (solutions->length == 0)
     {
         my_putstr("KO\n");
         return (0);
     }
-    move(*map, (t_path*)da_at(solutions, 0), solutions);
+    move(map, (t_path*)da_at(solutions, 0));
+    print_map(map);
+    print_solutions(solutions);
     return (1);
 }
 
