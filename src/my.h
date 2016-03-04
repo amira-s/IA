@@ -59,8 +59,12 @@ char 		*getfilename();
 void    	print_t(t_map *map);
 
 /*outcome.c*/
-int 		won();
-void print_map(t_map map);
-void move(t_map map, t_path *path, t_da *solutions);
+int         won();
+void        print_map(t_map map);
+void        move(t_map map, t_path *path, t_da *solutions);
+
+/*freeing*/
+void        free_map(t_map *map);
+void        free_path(t_path *path);
 
 #endif /* __MY__ */

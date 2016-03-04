@@ -38,7 +38,8 @@ void		sort_solutions(t_da *solutions)
 	}
 }
 
-void		get_solutions(t_map *map, t_da *solutions, t_path *path)
+
+static void scan_resources(t_map *map, t_da *solutions, t_path *path)
 {
 	int 	i;
 	int 	newpv;
@@ -46,36 +47,34 @@ void		get_solutions(t_map *map, t_da *solutions, t_path *path)
 	t_map 	*map_tmp;
 	t_path  *path_tmp;
 
+    for (i = 0; i < map->resrc.len; i++)
+        if (map->resrc.tab[i].visited == 0)
+        {
+            newpv = reachable(map, map->resrc.tab[i].coord.x,
+                              map->resrc.tab[i].coord.y);
+            if (newpv != 0)
+            {
+                map_tmp = copy_map(map);
+                path_tmp = path_copy(path);
+                pos = map_tmp->start = map->resrc.tab[i].coord;
+                map_tmp->init.pv = newpv;
+                map_tmp->resrc.tab[i].visited = 1;
+                path_push(path_tmp, pos);
+                get_solutions(map_tmp, solutions, path_tmp);
+                free_map(map_tmp);
+                free_path(path_tmp);
+            }
+        }
+}
+
+void get_solutions(t_map *map, t_da *solutions, t_path *path)
+{
 	if (map->init.pv >= dist_exit(map, map->start))
 	{
         path_push(path, map->finish);
 		da_push(solutions, path_copy(path));
 	}
 	else
-	{
-		for (i = 0; i < map->resrc.len; i++)
-		{
-			if (map->resrc.tab[i].visited == 0)
-			{
-				newpv = reachable(map, map->resrc.tab[i].coord.x, map->resrc.tab[i].coord.y);
-				if (newpv != 0)
-				{
-					map_tmp = copy_map(map);
-					path_tmp = path_copy(path);
-					pos = map_tmp->start = map->resrc.tab[i].coord;
-					map_tmp->init.pv = newpv;
-					map_tmp->resrc.tab[i].visited = 1;
-					path_push(path_tmp, pos);
-					get_solutions(map_tmp, solutions, path_tmp);
-				}
-			}
-		}
-	}
+        scan_resources(map, solutions, path);
 	path_pop(path);
 }
-
-
-
-
-
-

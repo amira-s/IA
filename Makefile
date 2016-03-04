@@ -31,6 +31,7 @@ SRC 		=	lib/my_putchar.c 		\
 				src/paths.c 			\
 				src/print.c 			\
 				src/copymap.c			\
+				src/freeing.c			\
 				src/init.c 				\
 				src/solve.c
 
