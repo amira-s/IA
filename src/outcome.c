@@ -27,15 +27,15 @@ void print_map(t_map *map)
 	    for (j = 0; j < map->w; j++)
 	    {
 	    	if (map->tab[i][j] == '#')
-	    		my_putstr("\033[42m \033[0m");
+	    		my_putstr(PRINTABLE_EXIT);
 	    	else if (map->tab[i][j] == ' ')
-	    		my_putstr("\033[107;2;30m \033[0m");
+	    		my_putstr(PRINTABLE_SPACE);
 	    	else if (map->tab[i][j] == '+')
-	    		my_putstr("\033[46;36m \033[0m");
+	    		my_putstr(PRINTABLE_RESOURCE);
 	    	else if (map->tab[i][j] == '-')
-				my_putstr("\033[1;107;95m \033[0m");
+				my_putstr(PRINTABLE_TRACE);
 	    	else
-				my_putstr("\033[1;105;95m \033[0m");
+				my_putstr(PRINTABLE_PLAYER);
 	    }
     	my_putstr("\n");
 	}

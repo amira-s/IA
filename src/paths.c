@@ -10,7 +10,6 @@ t_vect path_pop(t_path *p)
         my_putstr("ERROR: path_pop: empty path (len <= 0)\n");
         return (v);
     }
-
     prev = p->tab[p->len - 2];
     v = p->tab[p->len - 1];
     p->dist -= vect_dist(v, prev);

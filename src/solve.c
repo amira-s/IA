@@ -11,6 +11,13 @@
 #include "my.h"
 #include <stdio.h>
 
+int lose(t_map *map)
+{
+    print_map(map);
+    my_putstr("KO\n");
+    return (0);
+}
+
 int 	game(t_map *map)
 {
 	t_da	*solutions;
@@ -22,8 +29,7 @@ int 	game(t_map *map)
 	sort_solutions(solutions);
 	if (solutions->length == 0)
     {
-        my_putstr("KO\n");
-        return (0);
+        return lose(map);
     }
     move(map, (t_path*)da_at(solutions, 0));
     print_map(map);
@@ -71,5 +77,3 @@ int		main(int argc, char *argv[])
     }
 	return (0);
 }
-
-
