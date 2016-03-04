@@ -1,13 +1,3 @@
-/*
-** fjkdh for octocat in /home/amira_s/octo/src
-**
-** Made by AMIRA Syrine
-** Login   <amira_s@etna-alternance.net>
-**
-** Started on  Fri Jan  22 16:23:25 2015 AMIRA Syrine
-** Last update Fri Jan  22 16:45:07 2015 AMIRA Syrine
-*/
-
 #include "my.h"
 #include <stdio.h>
 
@@ -18,7 +8,7 @@ int lose(t_map *map)
     return (0);
 }
 
-int 	game(t_map *map)
+int game(t_map *map)
 {
 	t_da	*solutions;
 	t_path	path;
@@ -37,7 +27,7 @@ int 	game(t_map *map)
     return (1);
 }
 
-void	*verif(char *argv[])
+void *verif(char *argv[])
 {
     t_map *map;
 
@@ -51,7 +41,16 @@ void	*verif(char *argv[])
 	return (0);
 }
 
-int		main(int argc, char *argv[])
+static void init_map_from_args(char **argv, t_map *map)
+{
+    map->init.pv = my_getnbr(argv[1]);
+    map->init.r  = my_getnbr(argv[2]);
+    init_pos(map);
+    fin_pos(map);
+    fill_resrc(map);
+}
+
+int	main(int argc, char *argv[])
 {
     t_map *map;
 
@@ -63,11 +62,7 @@ int		main(int argc, char *argv[])
     map = verif(argv);
     if (map != 0)
     {
-        map->init.pv = my_getnbr(argv[1]);
-        map->init.r = my_getnbr(argv[2]);
-        init_pos(map);
-        fin_pos(map);
-        fill_resrc(map);
+        init_map_from_args(argv, map);
         game(map);
     }
     else
