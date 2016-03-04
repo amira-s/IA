@@ -3,3 +3,5 @@ solve
 
 *.o
 *.dSYM
+
+.DS_Store
