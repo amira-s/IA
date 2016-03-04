@@ -40,14 +40,16 @@ void 		fill_resrc(t_map *);
 int      	dist_exit(t_map *map, t_vect v);
 int 		reachable(t_map *map, int x, int y);
 void		sort_solutions(t_da *solutions);
-t_map 		*copy_map(t_map *map);
 void		get_solutions(t_map *map, t_da *solutions, t_path *path);
+
+/*copymap.c*/
+t_map 		*copy_map(t_map *map);
 
 /*print.c*/
 void        print_path(t_path *path);
 void        print_solutions(t_da *solutions);
 void 		print_resrc_tab(t_map *map);
-void    print_resrc(t_map *map, int i);
+void 		print_resrc(t_map *map, int i);
 
 /*getmap.c*/
 void    	freetab(t_map *);
